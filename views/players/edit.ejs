@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editing <%= player.name %> </title>
+</head>
+<body>
+    
+    <h1>Editing <%= player.name %>'s  information</h1>
+    <form action="/players/<%=player._id%>?_method=PUT" method="POST">
+        <label for="name">Player Name</label>
+        <input type="text" name="name" id="name" required placeholder="Player name" value="<%= player.name %> ">
+        <label for="main">Main Character</label>
+        <select name="main" id="main">
+            <% for (let character of characters) {%>
+            <option value="<%= character %>" <%= player.main === character ? 'selected' : '' %>><%= character %> </option> 
+            <% } %> 
+        </select>
+        <label for="subs">Subs</label>
+        <select name="subs" id="subs" multiple>
+            <% for (let character of characters) {%>
+            <option value="<%= character %>" 
+                <% for (let sub of player.subs) { %>
+                    <%= sub === character ? 'selected' : '' %>
+                <% } %> 
+            ><%= character %> </option> 
+            <% } %> 
+        </select>
+        <label for="region">Region</label>
+        <select name="region" id="region">
+            <% for (let region of regions) {%>
+                <option value="<%= region %>" <%= player.region === region ? 'selected' : '' %>> <%= region %> </option> 
+                <% } %> 
+        </select>
+        <button>Submit</button>
+    </form>
+
+    <a href="/players/<%=player._id%>">Cancel Edit</a>
+
+</body>
+</html>
